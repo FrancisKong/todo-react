@@ -81,6 +81,7 @@ class TodoForm extends React.Component {
       .send(todo)
       .end((err, res) => {
         if (err) return console.error(err);
+        this.refs.text.value = '';
         this.props.updateTodoList(res.body);
       });
   }
@@ -190,16 +191,16 @@ class Todo extends React.Component {
   }
 
   handleDelete(index) {
+    console.log(index);
     const todoList = this.state.todoList;
     if (index < 0 || index > todoList.length) {
       console.error('index out of bounds');
     } else {
       const todo = todoList[index];
-      delete todoList[index];
-      this.setState({ todoList });
       superagent.del(`/api/todos/${todo._id}`)
         .end((err, res) => {
           if (err) console.error(err);
+          this.setState({ todoList: res.body });
           console.log(res.body);
         });
     }

@@ -166,6 +166,7 @@ var TodoForm = function (_React$Component3) {
       var todo = { text: this.refs.text.value, done: false };
       superagent.post('/api/todos').send(todo).end(function (err, res) {
         if (err) return console.error(err);
+        _this4.refs.text.value = '';
         _this4.props.updateTodoList(res.body);
       });
     }
@@ -348,15 +349,17 @@ var Todo = function (_React$Component6) {
   }, {
     key: 'handleDelete',
     value: function handleDelete(index) {
+      var _this10 = this;
+
+      console.log(index);
       var todoList = this.state.todoList;
       if (index < 0 || index > todoList.length) {
         console.error('index out of bounds');
       } else {
         var todo = todoList[index];
-        delete todoList[index];
-        this.setState({ todoList: todoList });
         superagent.del('/api/todos/' + todo._id).end(function (err, res) {
           if (err) console.error(err);
+          _this10.setState({ todoList: res.body });
           console.log(res.body);
         });
       }
