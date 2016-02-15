@@ -1,0 +1,12 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb/base",
+  "globals": {
+    "React": true,
+    "ReactDOM": true,
+    "superagent": true,
+  },
+  "rules": {
+    "strict": 0
+  },
+}
